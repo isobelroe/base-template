@@ -1,0 +1,295 @@
+<!doctype html>
+
+<html>
+  <head>
+    
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    {.if template.mobileStylesEnabled}
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    {.end}
+
+    <!--INCLUDE SQS SCRIPTS, META TAGS AND USER CONTENT FROM THE CODE INJECTION TAB-->
+
+    {squarespace-headers}
+    <squarespace:script src="site.js" combo="false" />
+  <!-- test comment -->
+  </head>
+
+    <body id="{squarespace.page-id}" class="{squarespace.page-classes}">
+
+<!--       <nav id="mobile-navigation" class="mobile-nav">
+        <squarespace:navigation navigationId="mainNav" template="navigation-mobile" />
+      </nav> -->
+      <div id="mobileNav">
+        <squarespace:navigation navigationId="mainNav" template="navigation" />
+      </div>
+    
+    <!--HEADER-->
+    <div class="site-wrapper">
+      <div class="site-inner-wrapper">
+    <!--CONTENT INJECTION POINT-->
+    {.if item}
+      <header id="header"{.main-image?} class="has-main-image"{.end}>
+ 
+        <div class="title-nav-wrapper">
+
+          <!--SITE TITLE OR LOGO-->
+
+          {.section website}          
+          <h1 data-content-field="site-title" class="site-title">
+            <a href="/" id="top">
+              {.section logoImageUrl}
+               <img src="{logoImageUrl}?format=400w" alt="{siteTitle}" />
+              {.or}
+                {siteTitle}
+              {.end}
+            </a>
+          </h1>
+          {.end}
+          <a class="icon-menu" id="mobileMenu"></a>
+
+          <!--MAIN NAVIGATION-->
+          <div id="desktopNav">
+            <squarespace:navigation navigationId="mainNav" template="navigation" />
+          </div>
+
+        </div>
+        {.section item}
+        {.main-image?}
+        <div class="banner-image content-fill">
+          <img {@|image-meta} />
+        </div>
+        {.end}
+        <div class="title-desc-wrapper{.main-image?} has-main-image{.end}"  data-content-field="page-settings">
+          <div class="title-desc-inner">
+            {.if startDate}
+            <h1 class="page-title">{title}</h1><br>
+            <div class="page-desc">
+              <p class="event-time">
+                <time class="event-meta-heading">{startDate|date %A, %B %e, %Y}{.same-day?}{.or}{.if endDate} &ndash; {endDate|date %A, %B %e, %Y}{.end}{.end}</time><br>
+                <time class="event-time-12hr"></span>{startDate|date %l:%M%P}{.same-day?}{.if endDate} &ndash; {endDate|date %l:%M%P}{.end}{.end}</time>
+                <time class="event-time-24hr"></span>{startDate|date %H:%M}{.same-day?}{.if endDate} &ndash; {endDate|date %H:%M}{.end}{.end}</time>
+              </p>
+            </div>
+            {.or}
+              {.if productType}
+              <h1 class="page-title">{title}</h1><br>
+              {.if excerpt}<div class="page-desc">{excerpt}</div>{.end}
+              {.or}
+              <h1 class="page-title">{.passthrough?}
+                <a href="{sourceUrl}" class="entry-title-passthrough" target="_blank">{title}</a>
+              {.or}
+                {title}
+              {.end}</h1><br>
+              <div class="page-desc">
+                <p class="date entry-author">
+                  <time class="published" datetime="{addedOn|date %F}">{addedOn|date %B %e, %Y}</time>{.section author}<span class="author-name"><br>
+                  <em>by</em> <a href="{collection.fullUrl}?author={author.id}">{displayName}</a></span>{.end}
+                </p>
+              </div>
+              {.end}
+            {.end}
+          </div>
+        </div>
+
+      </header>
+      
+      <section id="content-wrapper">
+        <div class="sqs-cart-dropzone"></div> 
+        <div class="content">
+
+          <div class="content-inner">
+          {squarespace.main-content}
+          </div>
+          
+          <footer class="entry-footer clear">
+            <div class="outer-wrapper">
+              <div class="wrapper">
+                {.if categories || tags || sourceUrl}
+                <div class="entry-meta">
+                  {.section categories}<div><em>Posted in</em> {.repeated section @}<a href="{collection.fullUrl}?category={@|url-encode}" rel="tag">{@}</a>{.alternates with}, {.end}</div>{.end}
+                  {.if categories && tags} <em>and</em> {.end}
+                  {.section tags}<div><em>tagged with</em> {.repeated section @}<a href="{collection.fullUrl}?tag={@|url-encode}" rel="tag">{@}</a>{.alternates with}, {.end}</div>{.end}                
+                  {.passthrough?}
+                  {.or}
+                  {.section sourceUrl}<div class="source-url"><a href="{sourceUrl}" target="_blank">Source</a></div>{.end}
+                  {.end}
+                </div>
+                {.end}
+
+                {.if pagination}
+                <nav class="pagination cf">
+                  {.if startDate}
+                    <a href="{collection.fullUrl}" class="back-to-all">Back to All</a>
+                    {.if pagination.prevItem}<div class="newer"><a href="{pagination.prevItem.fullUrl}">Previous</a></div>{.or}<div class="newer mute">Previous</div>{.end}
+                    {.if pagination.nextItem}<div class="older"><a href="{pagination.nextItem.fullUrl}">Next</a></div>{.or}<div class="older mute">Next</div>{.end}
+                  {.or}
+                    {.if productType}
+                      <a href="{collection.fullUrl}" class="back-to-all">Back to All</a>
+                      {.if pagination.prevItem}<div class="newer"><a href="{pagination.prevItem.fullUrl}">Previous</a></div>{.or}<div class="newer mute">Previous</div>{.end}
+                      {.if pagination.nextItem}<div class="older"><a href="{pagination.nextItem.fullUrl}">Next</a></div>{.or}<div class="older mute">Next</div>{.end}
+                      {.or}
+                      {.if pagination.prevItem}<div class="newer"><a href="{pagination.prevItem.fullUrl}">Newer</a></div>{.or}<div class="newer mute">Newer</div>{.end}
+                      {.if pagination.nextItem}<div class="older"><a href="{pagination.nextItem.fullUrl}">Older</a></div>{.or}<div class="older mute">Older</div>{.end}
+                    {.end}
+                  {.end}
+                </nav>
+                {.end}
+              </div>
+            </div>
+          </footer>
+        </div>
+      </section>
+      {.end}
+    {.or}
+     {.index?}
+        <header id="header">
+
+          <div class="title-nav-wrapper">
+
+            <!--SITE TITLE OR LOGO-->
+
+            {.section website}          
+            <h1 data-content-field="site-title" class="site-title">
+              <a href="/" id="top">
+                {.section logoImageUrl}
+                 <img src="{logoImageUrl}?format=400w" alt="{siteTitle}" />
+                {.or}
+                  {siteTitle}
+                {.end}
+              </a>
+            </h1>
+            <a class="icon-menu" id="mobileMenu"></a>
+            {.end}
+
+            <!--MAIN NAVIGATION-->
+            <div id="desktopNav">
+              <squarespace:navigation navigationId="mainNav" template="navigation" />
+            </div>
+
+          </div>
+
+        </header>
+        <section id="content-wrapper">
+          <div class="sqs-cart-dropzone"></div>  
+          {squarespace.main-content}
+          <div class="back-to-top"></div>
+        </section>
+        {.or}
+
+        <header id="header"{.section collection}{.collectionTypeNameEquals? gallery} class="gallery-header"{.or}{.main-image?} class="has-main-image"{.end}{.end}{.end}>
+
+          <div class="title-nav-wrapper">
+
+            <!--SITE TITLE OR LOGO-->
+
+            {.section website}          
+            <h1 data-content-field="site-title" class="site-title">
+              <a href="/" id="top">
+                {.section logoImageUrl}
+                 <img src="{logoImageUrl}?format=400w" alt="{siteTitle}" />
+                {.or}
+                  {siteTitle}
+                {.end}
+              </a>
+            </h1>
+            <a class="icon-menu" id="mobileMenu"></a>
+            {.end}
+
+            <!--MAIN NAVIGATION-->
+            <div id="desktopNav">
+              <squarespace:navigation navigationId="mainNav" template="navigation" />
+            </div>
+
+          </div>
+          {.section collection}
+          {.collectionTypeNameEquals? gallery}
+            {.or}
+            {.collectionTypeNameEquals? album}
+              {.or}
+                {.main-image?}
+                <div class="banner-image content-fill">
+                  <img {mainImage|image-meta} />
+                </div>
+                {.end}
+                <div class="title-desc-wrapper{.main-image?} has-main-image{.end}{.if description}{.or} no-description{.end}" data-content-field="page-settings">
+                  <div class="title-desc-inner">
+                    <h1 class="page-title">{title}</h1><br>
+                    {.if description}<div class="page-desc">{description}</div>{.end}
+                  </div>
+                </div>
+              {.end}
+            {.end}
+          {.end}
+
+        </header>
+        
+        <section id="content-wrapper">
+          <div class="sqs-cart-dropzone"></div> 
+          <div class="content">
+            <div class="content-inner">
+            {squarespace.main-content}
+            </div>
+            {.section collection}
+              {.collectionTypeNameEquals? events}
+              {.or}
+                {.if pagination}
+                <footer class="entry-footer clear">
+                  <div class="outer-wrapper">
+                    <div class="wrapper">
+                      <nav class="pagination cf">
+                        {.if pagination.prevPage}<div class="newer"><a href="{pagination.prevPageUrl}">Newer</a></div>{.or}<div class="newer mute">Newer</div>{.end}
+                        {.if pagination.nextPage}<div class="older"><a href="{pagination.nextPageUrl}">Older</a></div>{.or}<div class="older mute">Older</div>{.end}
+                      </nav>
+                    </div>
+                  </div>
+                </footer>
+                {.end}
+              {.end}
+            {.end}
+          </div>
+        </section>
+      {.end}
+    {.end}
+
+    <!--FOOTER WITH OPEN BLOCK FIELD-->
+    <footer id="footer">
+      <div class="back-to-top-link"><a href="#top"><span class="arrow"></span>Top</a></div>
+      <div class="footer-wrapper">
+        <squarespace:block-field id="footerBlocks" columns="12" />
+      </div>
+    </footer>
+
+    <!--INJECTION POINT FOR TRACKING SCRIPTS AND USER CONTENT FROM THE CODE INJECTION TAB-->
+
+    {squarespace-footers}
+  </div>
+  </div>
+
+  {.if template.mobileStylesEnabled}{.or}
+    <script>
+      Y.use('node', function() {
+        Y.on('domready', function() {
+          var move;
+          Y.all('.folder-child-wrapper a').each(function(a) {
+            a.on('touchstart', function() {
+              move = false;
+            });
+            a.on('touchmove', function() {
+              move = true;
+            });
+            a.on('touchend', function() {
+              if (move === false) {
+                window.location = a.getAttribute('href');
+              }
+            });
+          });
+        });
+      });
+    </script>
+  {.end}
+    
+  </body>
+
+</html> 

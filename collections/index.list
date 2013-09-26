@@ -1,0 +1,52 @@
+{.section collection}
+  {.if collections.1}
+  <nav id="parallax-nav">
+    <ul>
+    {.repeated section collections}
+      <li><a href="#{urlId}"><span class="nav-title">{title}</span></a></li>
+    {.end}
+    </ul>
+  </nav>
+  {.end}
+
+  <div id="parallax-images">
+    {.repeated section collections}
+    <div class="image-container content-fill" data-url-id="{urlId}">
+      {.section mainImage}
+      <img {@|image-meta} class="loading" data-load="false" />
+      {.end}
+    </div>
+    {.end}
+  </div>
+
+  {.repeated section collections}
+  <div class="parallax-item" data-url-id="{urlId}">
+    <div class="title-desc-wrapper over-image{.section mainImage} has-main-image{.end}" {.section mainImage}data-color-suggested="#{colorData.suggestedBgColor}"{.end}>
+
+      {.section mainImage}
+      <div class="title-desc-image content-fill">
+        <img {@|image-meta} data-load="false"/>
+      </div>
+      {.end}
+
+      <div class="title-desc-inner">
+        <h1 class="page-title">{title}</h1><br>
+        {.if description}<div class="page-desc">{description}</div>{.end}
+      </div>
+    <div class="scroll-arrow"><span>SCROLL DOWN</span></div>
+    </div>
+    <div class="content{.section mainImage} has-main-image{.end}">
+    	<div class="content-inner{.section mainContent} has-content{.end}">
+        <div class="title-desc-wrapper">
+          <div class="title-desc-inner">
+            <h1 class="page-title">{title}</h1><br>
+            {.if description}<div class="page-desc">{description}</div>{.end}
+          </div>
+        </div>
+	      {mainContent}
+	     </div>
+    </div>
+  </div>
+  {.end}
+
+{.end}
